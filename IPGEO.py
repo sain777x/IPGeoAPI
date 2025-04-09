@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import requests
 import json
 import time
+import os
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False  # Tenta evitar escape de Unicode
@@ -152,4 +153,6 @@ def nearest_address():
         )
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)  # Porta 5001
+    # Configuração para o Render: usa a porta do ambiente ou 5001 localmente
+    port = int(os.environ.get("PORT", 5001))
+    app.run(host="0.0.0.0", port=port, debug=False)
